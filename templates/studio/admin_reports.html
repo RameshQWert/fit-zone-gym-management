@@ -1,0 +1,16 @@
+{% extends 'studio/admin_base.html' %}
+{% block title %}Reports · FitZone Admin{% endblock %}
+{% block admin_content %}
+<section class="admin-page-heading"><div><span class="admin-overline">FITZONE / REPORTING</span><h1>Reports</h1><p>Current activity and recorded payment totals from your FitZone database.</p></div><a class="admin-secondary-button" href="{% url 'admin_dashboard' %}">← Dashboard</a></section>
+<section class="admin-kpi-grid" aria-label="FitZone reports">
+  <article class="admin-kpi"><span class="admin-kpi-icon green">₹</span><span class="admin-kpi-label">Paid This Month</span><strong>₹{{ month_paid|floatformat:0 }}</strong><small>{{ month_payment_count }} recorded payments</small></article>
+  <article class="admin-kpi"><span class="admin-kpi-icon blue">₹</span><span class="admin-kpi-label">Paid All Time</span><strong>₹{{ all_paid|floatformat:0 }}</strong><small>{{ all_payment_count }} total payment records</small></article>
+  <article class="admin-kpi"><span class="admin-kpi-icon violet">◷</span><span class="admin-kpi-label">Member Check-ins</span><strong>{{ attendance_week }}</strong><small>last 7 days</small></article>
+  <article class="admin-kpi"><span class="admin-kpi-icon orange">♙</span><span class="admin-kpi-label">Current Members</span><strong>{{ member_count }}</strong><small>{{ active_subscriptions }} active subscriptions</small></article>
+</section>
+<section class="admin-dashboard-grid">
+  <article class="admin-panel"><div class="admin-panel-heading"><div><span class="admin-overline">PAYMENTS</span><h2>Records by status</h2></div><a class="admin-inline-link" href="{% url 'admin_manage_list' 'payments' %}">Manage payments ↗</a></div>{% for row in payment_statuses %}<div class="admin-plan-row"><span>{{ row.status|title }}</span><strong>{{ row.total }}</strong><div><i style="width:{% if all_payment_count %}{% widthratio row.total all_payment_count 100 %}{% else %}0{% endif %}%"></i></div></div>{% empty %}<p class="admin-empty">There are no payment records yet. Add a record when a payment is received or needs follow-up.</p>{% endfor %}</article>
+  <article class="admin-panel"><div class="admin-panel-heading"><div><span class="admin-overline">CLASS ACTIVITY</span><h2>Current reservations</h2></div><a class="admin-inline-link" href="{% url 'admin_manage_list' 'bookings' %}">Manage bookings ↗</a></div><div class="admin-report-stat"><strong>{{ booking_count }}</strong><span>active class reservations</span></div><div class="admin-report-stat"><strong>{{ active_subscriptions }}</strong><span>current subscriptions</span></div><div class="admin-report-stat"><strong>{{ attendance_week }}</strong><span>check-ins this week</span></div><a class="admin-inline-link" href="{% url 'admin_manage_list' 'attendance' %}">Review attendance ↗</a></article>
+</section>
+<p class="admin-report-note">Revenue totals include only payment records marked Paid. FitZone does not collect or process payments through this admin console.</p>
+{% endblock %}

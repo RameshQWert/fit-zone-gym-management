@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <title>{% block title %}Admin · FitZone{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  <link rel="stylesheet" href="{% static 'css/redesign.css' %}">
+</head>
+<body class="admin-app">
+  <aside class="admin-sidebar">
+    <a href="{% url 'admin_dashboard' %}" class="admin-brand"><span class="brand-mark"><span>FZ</span></span><span>FitZone<small>ADMIN CONSOLE</small></span></a>
+    <nav class="admin-nav" aria-label="Admin navigation">
+      <span class="admin-nav-label">WORKSPACE</span>
+      <a class="{% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}" href="{% url 'admin_dashboard' %}"><span>⌂</span>Dashboard</a>
+      <a class="{% if resource == 'members' %}active{% endif %}" href="{% url 'admin_manage_list' 'members' %}"><span>♙</span>Members</a>
+      <a class="{% if resource == 'accounts' %}active{% endif %}" href="{% url 'admin_manage_list' 'accounts' %}"><span>♧</span>Accounts</a>
+      <a class="{% if resource == 'trainers' %}active{% endif %}" href="{% url 'admin_manage_list' 'trainers' %}"><span>♟</span>Trainers</a>
+      <a class="{% if resource == 'classes' %}active{% endif %}" href="{% url 'admin_manage_list' 'classes' %}"><span>▦</span>Classes</a>
+      <a class="{% if resource == 'plans' %}active{% endif %}" href="{% url 'admin_manage_list' 'plans' %}"><span>◇</span>Membership plans</a>
+      <a class="{% if resource == 'equipment' %}active{% endif %}" href="{% url 'admin_manage_list' 'equipment' %}"><span>◈</span>Equipment</a>
+      <a class="{% if resource == 'pages' %}active{% endif %}" href="{% url 'admin_manage_list' 'pages' %}"><span>▤</span>Site pages</a>
+      <span class="admin-nav-label">MEMBER ACTIVITY</span>
+      <a class="{% if resource == 'bookings' %}active{% endif %}" href="{% url 'admin_manage_list' 'bookings' %}"><span>▣</span>Bookings</a>
+      <a class="{% if resource == 'attendance' %}active{% endif %}" href="{% url 'admin_manage_list' 'attendance' %}"><span>◷</span>Attendance</a>
+      <a class="{% if resource == 'subscriptions' %}active{% endif %}" href="{% url 'admin_manage_list' 'subscriptions' %}"><span>▤</span>Subscriptions</a>
+      <a class="{% if resource == 'payments' %}active{% endif %}" href="{% url 'admin_manage_list' 'payments' %}"><span>▣</span>Payments</a>
+      <a class="{% if resource == 'inquiries' %}active{% endif %}" href="{% url 'admin_manage_list' 'inquiries' %}"><span>✉</span>Messages</a>
+      <a class="{% if resource == 'newsletter' %}active{% endif %}" href="{% url 'admin_manage_list' 'newsletter' %}"><span>◉</span>Newsletter</a>
+      <span class="admin-nav-label">SITE & TOOLS</span>
+      <a class="{% if request.resolver_match.url_name == 'admin_reports' %}active{% endif %}" href="{% url 'admin_reports' %}"><span>▥</span>Reports</a>
+      <a href="{% url 'facilities' %}"><span>◈</span>Facilities page</a>
+      {% if request.user.is_superuser %}<a href="/django-admin/"><span>⚙</span>Django admin</a>{% endif %}
+    </nav>
+    <div class="admin-sidebar-user"><span class="admin-user-avatar">{{ request.user.display_name|first|upper }}</span><span><strong>{{ request.user.display_name }}</strong><small>Administrator</small></span><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button aria-label="Log out" title="Log out">↪</button></form></div>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-topbar"><a class="admin-topbar-brand" href="{% url 'admin_dashboard' %}">FitZone <span>/ Admin</span></a><div class="admin-top-actions"><span class="admin-top-user">{{ request.user.display_name }} · {{ request.user.email }}</span><a class="admin-view-site" href="{% url 'admin_manage_edit' 'accounts' request.user.pk %}">My Profile</a><a class="admin-view-site" href="{% url 'home' %}">View Site <span>↗</span></a></div></header>
+    {% if messages %}<div class="admin-flashes" aria-live="polite">{% for message in messages %}<div class="admin-flash admin-flash-{{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    <main class="admin-content">{% block admin_content %}{% endblock %}</main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Facilities - FitZone{% endblock %}
+{% block content %}
+<section class="catalog-hero facilities-hero">
+  <div class="catalog-hero-inner section-shell">
+    <span class="home-section-pill">🏋️ &nbsp; World-Class Facilities</span>
+    <h1>{% if page and page.hero_title %}{{ page.hero_title }}{% else %}State-of-the-Art <span class="catalog-gradient-text">Equipment</span>{% endif %}</h1>
+    <p>{% if page and page.hero_subtitle %}{{ page.hero_subtitle }}{% else %}Train with the best equipment in the industry. Our gym features premium machines and tools to help you achieve your fitness goals.{% endif %}</p>
+    <div class="facility-overview-stats">
+      <article><strong>{{ equipment_count }}+</strong><span>Equipment Pieces</span></article><article><strong>{{ cardio_count }}</strong><span>Cardio Machines</span></article><article><strong>{{ strength_count }}</strong><span>Strength Equipment Types</span></article><article><strong>{{ zone_count }}</strong><span>Training Zones</span></article>
+    </div>
+  </div>
+</section>
+
+<section class="equipment-browser" data-filter-group>
+  <div class="equipment-filter-bar">
+    <div class="equipment-filter-inner section-shell">
+      <label class="equipment-search"><span aria-hidden="true">⌕</span><input type="search" data-filter-search placeholder="Search equipment..." aria-label="Search equipment"></label>
+      <div class="catalog-filter-row equipment-category-filters" role="group" aria-label="Filter equipment">
+        <button class="catalog-filter is-active" type="button" data-filter-control="all">All Equipment</button>
+        <button class="catalog-filter" type="button" data-filter-control="cardio">🏃 &nbsp; Cardio</button>
+        <button class="catalog-filter" type="button" data-filter-control="strength">💪 &nbsp; Strength</button>
+        <button class="catalog-filter" type="button" data-filter-control="free-weights">🏋️ &nbsp; Free Weights</button>
+        <button class="catalog-filter" type="button" data-filter-control="machines">⚙️ &nbsp; Machines</button>
+        <button class="catalog-filter" type="button" data-filter-control="accessories">🎯 &nbsp; Accessories</button>
+        <button class="catalog-filter" type="button" data-filter-control="other">📦 &nbsp; Other</button>
+      </div>
+    </div>
+  </div>
+  <div class="equipment-groups section-shell">
+    {% for group in facility_groups %}
+    <section class="equipment-category-group" data-filter-section>
+      <div class="equipment-category-heading"><span>{{ group.icon }}</span><div><h2>{{ group.title }}</h2><p>{{ group.items|length }} equipment items</p></div></div>
+      <div class="equipment-card-grid">
+        {% for item in group.items %}
+        <article class="equipment-card" data-filter-item data-filter-value="{{ item.category }}">
+          <div class="equipment-card-photo"><img src="{{ item.image_url }}" alt="{{ item.name }} at FitZone" loading="lazy"><span>{{ item.count }}</span></div>
+          <div class="equipment-card-copy"><h3>{{ item.name }}</h3><p>{{ item.description }}</p><div><span>⌖ &nbsp; {{ item.category_name }} Area</span><small>{{ item.brand }}</small></div></div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+    <p class="equipment-no-results" data-filter-empty hidden>No equipment matches that search. Try another name or category.</p>
+  </div>
+</section>
+<section class="catalog-page-cta"><div class="section-shell catalog-page-cta-inner"><div><span class="home-section-pill">COME SEE FOR YOURSELF</span><h2>Find your <span class="catalog-gradient-text">training space.</span></h2><p>Tour the gym and find the right place to get started.</p></div><a class="about-primary-button" href="{% url 'contact' %}">Plan a Visit <span>→</span></a></div></section>
+{% endblock %}

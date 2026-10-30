@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}FitZone - Become Unstoppable{% endblock %}
+{% block content %}
+<section class="home-hero" data-hero-carousel aria-label="FitZone highlights">
+  <div class="hero-backdrops" aria-hidden="true">
+    <img class="hero-backdrop is-active" data-hero-image src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2200&q=90" alt="">
+    <img class="hero-backdrop" data-hero-image src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2200&q=90" alt="">
+    <img class="hero-backdrop" data-hero-image src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=2200&q=90" alt="">
+  </div>
+  <div class="hero-color-wash" aria-hidden="true"></div><div class="hero-grid-overlay" aria-hidden="true"></div>
+  <span class="hero-particle particle-one" aria-hidden="true"></span><span class="hero-particle particle-two" aria-hidden="true"></span><span class="hero-particle particle-three" aria-hidden="true"></span><span class="hero-particle particle-four" aria-hidden="true"></span><span class="hero-particle particle-five" aria-hidden="true"></span>
+  <div class="home-hero-content">
+    <div class="welcome-pill"><span></span> WELCOME TO FITZONE <span></span></div>
+    <h1><span data-hero-first>{% if page and page.hero_title %}{{ page.hero_title|truncatewords:1|upper }}{% else %}BECOME{% endif %}</span><span class="hero-gradient-text" data-hero-second>{% if page and page.hero_title %}{{ page.hero_title|cut:" "|slice:"7:"|upper }}{% else %}UNSTOPPABLE{% endif %}</span></h1>
+    <p class="home-hero-tagline" data-hero-tagline>{% if page and page.hero_subtitle %}{{ page.hero_subtitle }}{% else %}Join the elite. Train with the best. Achieve the impossible.{% endif %}</p>
+    <div class="home-hero-actions"><a class="hero-button hero-button-primary" href="{% url 'register' %}">Start Your Journey <span>→</span></a><a class="hero-button hero-button-secondary" href="{% url 'programs' %}"><span class="hero-play">▷</span> Explore Programs</a></div>
+    <div class="hero-stats" aria-label="FitZone at a glance">
+      <article class="hero-stat"><span class="hero-stat-icon">👥</span><strong>10K<span>+</span></strong><small>Active Members</small></article>
+      <article class="hero-stat"><span class="hero-stat-icon">🏆</span><strong>50<span>+</span></strong><small>Expert Trainers</small></article>
+      <article class="hero-stat"><span class="hero-stat-icon">🗓️</span><strong>100<span>+</span></strong><small>Weekly Classes</small></article>
+      <article class="hero-stat"><span class="hero-stat-icon">⭐</span><strong>99<span>%</span></strong><small>Success Rate</small></article>
+    </div>
+  </div>
+  <div class="hero-slide-dots" role="group" aria-label="Choose hero image"><button class="hero-dot" type="button" data-hero-dot="0" aria-label="Show strength training image" aria-pressed="true"></button><button class="hero-dot" type="button" data-hero-dot="1" aria-label="Show gym floor image" aria-pressed="false"></button><button class="hero-dot" type="button" data-hero-dot="2" aria-label="Show athlete image" aria-pressed="false"></button></div>
+  <div class="hero-scroll-hint"><span>SCROLL</span><i><b></b></i></div>
+</section>
+
+<section class="home-features section-shell section-pad" id="facilities">
+  <div class="home-section-intro"><span class="home-section-pill">⚡ &nbsp; Why Choose FitZone</span><h2>Everything You Need to <span class="hero-gradient-text">Succeed</span></h2><p>World-class facilities, expert guidance, and a supportive community to help you reach your goals.</p></div>
+  <div class="home-feature-grid">
+    <article class="home-feature-card"><span class="feature-icon feature-orange">🏋️</span><h3>Premium Equipment</h3><p>Modern machines and free weights for every workout style.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-gold">🙋</span><h3>Expert Coaching</h3><p>Experienced trainers guide you at every step.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-teal">🥗</span><h3>Supportive Community</h3><p>Train alongside people who keep you motivated.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-blue">💪</span><h3>Personal Training</h3><p>Find the right coaching and pace for your goals.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-purple">📱</span><h3>Mobile Friendly</h3><p>Check schedules and manage your membership anywhere.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-pink">🧘</span><h3>Wellness Programs</h3><p>Make space for mobility, recovery, and balance.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-pink">🏃</span><h3>Group Classes</h3><p>Coach-led sessions bring good energy to your week.</p></article>
+    <article class="home-feature-card"><span class="feature-icon feature-gold">🎯</span><h3>Progress Tracking</h3><p>Keep your bookings and membership in one place.</p></article>
+  </div>
+</section>
+
+<section class="home-programs-section section-pad"><div class="section-shell"><div class="home-programs-heading"><div><span class="home-section-pill">🔥 &nbsp; Find Your Training</span><h2>Make Your Move.</h2></div><a class="home-view-link" href="{% url 'programs' %}">Explore all programs <span>↗</span></a></div>
+  {% if classes %}<div class="home-class-grid">{% for fitness_class in classes %}<article class="home-class-card"><span class="eyebrow">{{ fitness_class.category }} · {{ fitness_class.level|title }}</span><h3>{{ fitness_class.title }}</h3><p>{{ fitness_class.description|default:"Coach-led training, built around your next goal." }}</p><div class="home-class-meta"><span>{{ fitness_class.starts_at|date:"D, M j · g:i A" }}</span><a href="{% url 'schedule' %}" aria-label="View class schedule">↗</a></div></article>{% endfor %}</div>{% else %}<div class="empty-state">New classes are on the way. <a href="{% url 'contact' %}">Talk with our team ↗</a></div>{% endif %}
+</div></section>
+
+<section class="home-coaches section-pad">
+  <div class="section-shell">
+    <div class="home-programs-heading">
+      <div><span class="home-section-pill">🏆 &nbsp; Meet your people</span><h2>Coaching that <span class="hero-gradient-text">gets you.</span></h2></div>
+      <a class="home-view-link" href="{% url 'trainers' %}">Meet all coaches <span>↗</span></a>
+    </div>
+    <div class="home-coach-grid">
+      {% for trainer in trainers %}
+      <article class="home-coach-card">
+        {% if trainer.photo_url %}<img src="{{ trainer.photo_url }}" alt="Coach {{ trainer.name }}" loading="lazy">{% else %}<div class="home-coach-placeholder" aria-hidden="true">FZ</div>{% endif %}
+        <div class="home-coach-shade"></div>
+        <div class="home-coach-copy"><span>{{ trainer.specialties }}</span><h3>{{ trainer.name }}</h3><p>{{ trainer.years_experience }}+ years helping members find their strength</p></div>
+      </article>
+      {% empty %}
+      <div class="empty-state">Our coaching team is growing. <a href="{% url 'contact' %}">Say hello ↗</a></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="home-stories section-pad">
+  <div class="section-shell">
+    <div class="home-section-intro"><span class="home-section-pill">💬 &nbsp; MEMBER STORIES</span><h2>Progress with a <span class="story-gradient">little help.</span></h2><p>Every journey is different. A welcoming place and a coach in your corner can make the next step easier.</p></div>
+    <div class="home-story-grid">
+      <article class="home-story-card"><div class="home-story-head"><div class="home-story-avatar avatar-one">AT</div><div><h3>Alex T.</h3><span>Building strength</span></div><div class="home-story-stars" aria-label="5 out of 5 stars">★★★★★</div></div><blockquote>“I finally found a routine that feels sustainable. The coaches meet me where I am and help me keep moving forward.”</blockquote></article>
+      <article class="home-story-card"><div class="home-story-head"><div class="home-story-avatar avatar-two">JM</div><div><h3>Jordan M.</h3><span>Finding a new rhythm</span></div><div class="home-story-stars" aria-label="5 out of 5 stars">★★★★★</div></div><blockquote>“The class schedule makes it easy to show up, and the people here make every session feel welcoming.”</blockquote></article>
+      <article class="home-story-card"><div class="home-story-head"><div class="home-story-avatar avatar-three">MC</div><div><h3>Morgan C.</h3><span>Training for balance</span></div><div class="home-story-stars" aria-label="5 out of 5 stars">★★★★★</div></div><blockquote>“I came in looking for guidance and found a community that celebrates the small wins right along with me.”</blockquote></article>
+      <article class="home-story-card"><div class="home-story-head"><div class="home-story-avatar avatar-four">RL</div><div><h3>Riley L.</h3><span>Making time for wellness</span></div><div class="home-story-stars" aria-label="5 out of 5 stars">★★★★★</div></div><blockquote>“Having different classes to choose from keeps me curious, motivated, and excited for the week ahead.”</blockquote></article>
+    </div>
+  </div>
+</section>
+
+<section class="home-offer section-shell">
+  <div class="home-offer-inner"><span class="home-section-pill">🚀 &nbsp; YOUR NEXT CHAPTER STARTS HERE</span><h2>Ready to get <span class="hero-gradient-text">started?</span></h2><p>Take the first step. We’ll help you find the right class, coach, and membership for your goals.</p><div class="home-offer-actions"><a class="hero-button hero-button-primary" href="{% url 'register' %}">Start Your Journey <span>→</span></a><a class="hero-button hero-button-secondary" href="{% url 'pricing' %}">View Memberships</a></div></div>
+</section>
+
+<section class="home-newsletter section-shell" aria-labelledby="newsletter-title">
+  <div class="home-newsletter-copy"><span class="eyebrow">GOOD THINGS IN YOUR INBOX</span><h2 id="newsletter-title">Stay <span class="hero-gradient-text">motivated.</span></h2><p>Get fitness tips, class updates, and member-only offers from FitZone.</p></div>
+  <form class="home-newsletter-form" method="post" action="{% url 'newsletter_signup' %}">{% csrf_token %}<label class="visually-hidden" for="newsletter-email">Email address</label><input id="newsletter-email" type="email" name="email" placeholder="Enter your email" autocomplete="email" required><button type="submit">Subscribe <span>↗</span></button></form>
+</section>
+{% endblock %}

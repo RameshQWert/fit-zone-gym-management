@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Programs - FitZone{% endblock %}
+{% block content %}
+<section class="catalog-hero programs-hero">
+  <div class="catalog-hero-inner section-shell">
+    <span class="home-section-pill">🏋️ &nbsp; Fitness Programs</span>
+    <h1>{% if page and page.hero_title %}{{ page.hero_title }}{% else %}Find Your Perfect <span class="catalog-gradient-text">Workout</span>{% endif %}</h1>
+    <p>Choose from our wide variety of programs designed for all fitness levels. Whether you're a beginner or a pro, we have something for you.</p>
+  </div>
+</section>
+
+<section class="programs-catalog" data-filter-group>
+  <div class="catalog-filter-strip">
+    <div class="catalog-filter-row section-shell" role="group" aria-label="Filter programs">
+      <button class="catalog-filter is-active" type="button" data-filter-control="all">🏋️ &nbsp; All Programs</button>
+      <button class="catalog-filter" type="button" data-filter-control="strength">💪 &nbsp; Strength</button>
+      <button class="catalog-filter" type="button" data-filter-control="cardio">💗 &nbsp; Cardio</button>
+      <button class="catalog-filter" type="button" data-filter-control="flexibility">🧘 &nbsp; Flexibility</button>
+      <button class="catalog-filter" type="button" data-filter-control="hiit">🔥 &nbsp; HIIT</button>
+      <button class="catalog-filter" type="button" data-filter-control="aqua">🏊 &nbsp; Aqua</button>
+    </div>
+  </div>
+  <div class="reference-programs section-shell" aria-label="Fitness programs">
+    <div class="reference-program-grid catalog-program-grid">
+      <article class="reference-program-card reference-strength" data-filter-item data-filter-value="strength"><div class="reference-program-content"><span class="reference-program-kicker">BUILD STRENGTH</span><h2>Strength Training</h2><p>Build muscle, increase power, and sculpt your physique with expert coaching.</p><div class="reference-program-meta"><span>⏱ 45–60 min</span><span>📊 All levels</span><span>🔥 400–600 cal</span></div><a href="{% url 'schedule' %}?category=Strength">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-hiit" data-filter-item data-filter-value="hiit cardio"><div class="reference-program-content"><span class="reference-program-kicker">PUSH YOUR PACE</span><h2>HIIT Cardio</h2><p>Torch calories and boost your metabolism with high-intensity interval training.</p><div class="reference-program-meta"><span>⏱ 30–45 min</span><span>📊 Intermediate</span><span>🔥 500–800 cal</span></div><a href="{% url 'schedule' %}?category=Conditioning">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-crossfit" data-filter-item data-filter-value="strength hiit"><div class="reference-program-content"><span class="reference-program-kicker">MOVE WITH PURPOSE</span><h2>CrossFit</h2><p>Functional fitness that brings strength, skill, and conditioning together.</p><div class="reference-program-meta"><span>⏱ 60 min</span><span>📊 Advanced</span><span>🔥 600–900 cal</span></div><a href="{% url 'schedule' %}?category=Conditioning">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-yoga" data-filter-item data-filter-value="flexibility"><div class="reference-program-content"><span class="reference-program-kicker">FIND YOUR FLOW</span><h2>Yoga &amp; Pilates</h2><p>Improve flexibility, core strength, and mental clarity through mindful movement.</p><div class="reference-program-meta"><span>⏱ 45 min</span><span>📊 All levels</span><span>✨ Mobility</span></div><a href="{% url 'schedule' %}?category=Mobility">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-boxing" data-filter-item data-filter-value="hiit cardio"><div class="reference-program-content"><span class="reference-program-kicker">TRAIN WITH FOCUS</span><h2>Boxing &amp; MMA</h2><p>Learn combinations, sharpen technique, and get a complete full-body workout.</p><div class="reference-program-meta"><span>⏱ 45 min</span><span>📊 All levels</span><span>🔥 500–700 cal</span></div><a href="{% url 'schedule' %}?category=Conditioning">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-spin" data-filter-item data-filter-value="cardio"><div class="reference-program-content"><span class="reference-program-kicker">RIDE TO THE BEAT</span><h2>Spin Classes</h2><p>High-energy cycling sessions with music and motivating instructors.</p><div class="reference-program-meta"><span>⏱ 45 min</span><span>📊 All levels</span><span>🔥 400–600 cal</span></div><a href="{% url 'schedule' %}">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-aqua" data-filter-item data-filter-value="aqua"><div class="reference-program-content"><span class="reference-program-kicker">LOW-IMPACT ENERGY</span><h2>Aqua Fitness</h2><p>Build endurance and strength with a refreshing, joint-friendly pool workout.</p><div class="reference-program-meta"><span>⏱ 45 min</span><span>📊 All levels</span><span>💧 Low impact</span></div><a href="{% url 'schedule' %}">Learn More <span>›</span></a></div></article>
+      <article class="reference-program-card reference-crossfit" data-filter-item data-filter-value="strength"><div class="reference-program-content"><span class="reference-program-kicker">BUILD EVERYDAY STRENGTH</span><h2>Personal Training</h2><p>One-on-one coaching built around your goals, schedule, and starting point.</p><div class="reference-program-meta"><span>⏱ 45 min</span><span>📊 All levels</span><span>🎯 Personal plan</span></div><a href="{% url 'trainers' %}">Meet Our Trainers <span>›</span></a></div></article>
+      <article class="reference-program-card reference-hiit" data-filter-item data-filter-value="cardio hiit"><div class="reference-program-content"><span class="reference-program-kicker">MOVE AS A TEAM</span><h2>Group Classes</h2><p>Find your rhythm with supportive coaches and high-energy class sessions.</p><div class="reference-program-meta"><span>⏱ 45–60 min</span><span>📊 All levels</span><span>🤝 Group energy</span></div><a href="{% url 'schedule' %}">Browse Classes <span>›</span></a></div></article>
+    </div>
+    <p class="catalog-empty-state" data-filter-empty hidden>No programs match that category.</p>
+  </div>
+</section>
+
+<section class="catalog-stats-section section-pad"><div class="section-shell catalog-stats-grid"><article><span>🏋️</span><strong>8+</strong><p>Ways to Train</p></article><article><span>🗓️</span><strong>{{ classes|length }}+</strong><p>Upcoming Sessions</p></article><article><span>🏆</span><strong>Expert</strong><p>Coach Led</p></article><article><span>🔓</span><strong>All</strong><p>Fitness Levels</p></article></div></section>
+<section class="reference-page-cta section-shell"><div><span class="home-section-pill">YOUR NEXT SESSION IS WAITING</span><h2>Find a class. <span class="hero-gradient-text">Show up.</span></h2></div><a class="hero-button hero-button-primary" href="{% url 'schedule' %}">View the Schedule <span>→</span></a></section>
+{% endblock %}

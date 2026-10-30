@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Trainers - FitZone{% endblock %}
+{% block content %}
+<section class="catalog-hero trainers-hero">
+  <div class="catalog-hero-inner section-shell">
+    <span class="home-section-pill">🏆 &nbsp; Expert Team</span>
+    <h1>{% if page and page.hero_title %}{{ page.hero_title }}{% else %}Meet Our <span class="catalog-gradient-text">World-Class Trainers</span>{% endif %}</h1>
+    <p>{% if page and page.hero_subtitle %}{{ page.hero_subtitle }}{% else %}Our certified fitness professionals are passionate about helping you achieve your goals. Find the right coach to guide your fitness journey.{% endif %}</p>
+    <div class="trainer-overview-stats">
+      <article><strong>{{ trainer_count }}+</strong><span>Expert Trainers</span></article><article><strong>{{ specialty_count }}+</strong><span>Specializations</span></article><article><strong>{{ average_experience }}</strong><span>Avg. Years Experience</span></article><article><strong>{{ classes_taught }}</strong><span>Upcoming Classes</span></article>
+    </div>
+  </div>
+</section>
+
+<section class="trainer-directory" data-filter-group>
+  <div class="catalog-filter-strip"><div class="catalog-filter-row section-shell trainer-filter-row" role="group" aria-label="Filter trainers"><button class="catalog-filter is-active" type="button" data-filter-control="all">👥 &nbsp; All Trainers</button>{% for value, label in specialty_filters %}<button class="catalog-filter" type="button" data-filter-control="{{ value }}">{% if value == 'strength' %}💪{% elif value == 'yoga' %}🧘{% elif value == 'hiit' %}🔥{% elif value == 'nutrition' %}🥗{% elif value == 'boxing' %}🥊{% elif value == 'cardio' %}🏃{% elif value == 'swimming' %}🏊{% elif value == 'crossfit' %}🏋️{% else %}💚{% endif %} &nbsp; {{ label }}</button>{% endfor %}</div></div>
+  <div class="section-shell trainer-directory-content">
+    <div class="trainer-directory-grid">
+      {% for trainer in trainers %}
+      <article class="trainer-directory-card" data-filter-item data-filter-value="{{ trainer.filter_categories|join:' ' }}">
+        <div class="trainer-directory-photo">
+          {% if trainer.photo_url %}<img src="{{ trainer.photo_url }}" alt="{{ trainer.name|default:'FitZone trainer' }}" loading="lazy">
+          {% elif forloop.counter == 1 %}<img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=900&q=85" alt="FitZone strength coach" loading="lazy">
+          {% elif forloop.counter == 2 %}<img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=85" alt="FitZone wellness coach" loading="lazy">
+          {% elif forloop.counter == 3 %}<img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=85" alt="FitZone fitness coach" loading="lazy">
+          {% else %}<img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=85" alt="FitZone personal trainer" loading="lazy">{% endif %}
+          <span class="trainer-directory-years">{{ trainer.years_experience }}+ years</span>
+        </div>
+        <div class="trainer-directory-copy"><h2>{{ trainer.name|default:'FitZone Coach' }}</h2><p class="trainer-directory-specialty">{{ trainer.specialties }}</p><div class="trainer-directory-tags">{% for category in trainer.filter_categories %}<span>{{ category|title }}</span>{% endfor %}</div><div class="trainer-directory-meta"><span>📅 &nbsp; {{ trainer.years_experience }}+ years experience</span><span>🏋️ &nbsp; {{ trainer.class_count }} upcoming classes</span></div>
+          <details class="trainer-profile-details"><summary>View Profile <span>＋</span></summary><div><p>{{ trainer.bio|default:"A supportive, experienced coach ready to help you train with confidence." }}</p><a href="{% url 'contact' %}?trainer={{ trainer.id }}">Ask about training with {{ trainer.name|default:'this coach' }}</a></div></details>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div class="empty-state trainer-filter-empty" data-filter-empty hidden>Our coaching team is growing or no trainer matches this filter. <a href="{% url 'contact' %}">Come say hello →</a></div>
+  </div>
+</section>
+<section class="catalog-page-cta"><div class="section-shell catalog-page-cta-inner"><div><span class="home-section-pill">PERSONAL GUIDANCE, YOUR WAY</span><h2>Find your <span class="catalog-gradient-text">coach.</span></h2><p>Tell us what you’re working toward and we’ll help you find a good fit.</p></div><a class="about-primary-button" href="{% url 'contact' %}">Talk With a Coach <span>→</span></a></div></section>
+{% endblock %}

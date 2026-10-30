@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Create Account - FitZone{% endblock %}
+{% block body_class %}auth-screen{% endblock %}
+{% block site_header %}{% endblock %}
+{% block site_footer %}{% endblock %}
+{% block content %}
+<section class="auth-login-page register-page">
+  <div class="login-card register-card">
+    <a class="login-brand" href="{% url 'home' %}" aria-label="FitZone home"><span class="brand-mark"><span>FZ</span></span><span class="brand-name">Fit<span>Zone</span></span></a>
+    <h1>Create Account</h1>
+    <p class="login-subtitle">Start your fitness transformation today</p>
+
+    <form method="post" class="login-form register-form" novalidate>
+      {% csrf_token %}
+      {{ form.username }}
+      {% if form.non_field_errors %}<div class="login-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+
+      <div class="login-field {% if form.full_name.errors %}has-error{% endif %}">
+        <label for="{{ form.full_name.id_for_label }}">Full Name <span>*</span></label>
+        <div class="login-input-wrap"><span class="login-input-icon" aria-hidden="true">♙</span>{{ form.full_name }}</div>
+        {% for error in form.full_name.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </div>
+      <div class="login-field {% if form.email.errors %}has-error{% endif %}">
+        <label for="{{ form.email.id_for_label }}">Email Address <span>*</span></label>
+        <div class="login-input-wrap"><span class="login-input-icon" aria-hidden="true">@</span>{{ form.email }}</div>
+        {% for error in form.email.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </div>
+      <div class="login-field {% if form.phone.errors %}has-error{% endif %}">
+        <label for="{{ form.phone.id_for_label }}">Phone Number <span class="optional-label">(optional)</span></label>
+        <div class="login-input-wrap"><span class="login-input-icon" aria-hidden="true">⌕</span>{{ form.phone }}</div>
+        {% for error in form.phone.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </div>
+      <div class="login-field {% if form.password1.errors %}has-error{% endif %}">
+        <label for="{{ form.password1.id_for_label }}">Password <span>*</span></label>
+        <div class="login-input-wrap"><span class="login-input-icon" aria-hidden="true">♙</span>{{ form.password1 }}<button class="password-toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.7"/></svg></button></div>
+        {% for error in form.password1.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </div>
+      <div class="login-field {% if form.password2.errors %}has-error{% endif %}">
+        <label for="{{ form.password2.id_for_label }}">Confirm Password <span>*</span></label>
+        <div class="login-input-wrap"><span class="login-input-icon" aria-hidden="true">♧</span>{{ form.password2 }}<button class="password-toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.7"/></svg></button></div>
+        {% for error in form.password2.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </div>
+      <div class="register-terms {% if form.terms_accepted.errors %}has-error{% endif %}">
+        {{ form.terms_accepted }}
+        <label for="{{ form.terms_accepted.id_for_label }}">I agree to the <a href="#terms-of-service">Terms of Service</a> and <a href="#privacy-policy">Privacy Policy</a></label>
+        {% for error in form.terms_accepted.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </div>
+      <button class="login-submit" type="submit">Create Account</button>
+    </form>
+    <p class="login-signup">Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+    <div class="register-policy-notes">
+      <p id="terms-of-service"><strong>Terms of Service</strong> Your FitZone account lets you manage membership details and class bookings.</p>
+      <p id="privacy-policy"><strong>Privacy Policy</strong> Your details are used to manage your account and communicate about your membership.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

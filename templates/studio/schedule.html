@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Class Schedule - FitZone{% endblock %}
+{% block content %}
+<section class="catalog-hero schedule-hero">
+  <div class="catalog-hero-inner section-shell">
+    <span class="home-section-pill">🗓️ &nbsp; Class Schedule</span>
+    <h1>{% if page and page.hero_title %}{{ page.hero_title }}{% else %}Weekly <span class="catalog-gradient-text">Timetable</span>{% endif %}</h1>
+    <p>{% if page and page.hero_subtitle %}{{ page.hero_subtitle }}{% else %}Plan your week with our diverse range of classes. Book your spot and start your fitness journey!{% endif %}</p>
+    <div class="schedule-hero-note"><span>✦</span> Find a class that fits your goals, then book your place online.</div>
+  </div>
+</section>
+
+<section class="schedule-day-strip">
+  <div class="section-shell schedule-day-tabs" role="group" aria-label="Choose a day">
+    {% for day in week_days %}<a class="schedule-day-tab {% if day.value == selected_day %}is-active{% endif %}" href="?day={{ day.value }}&amp;category={{ selected_category|urlencode }}&amp;trainer={{ selected_trainer }}" {% if day.value == selected_day %}aria-current="page"{% endif %}><span>{{ day.label }}</span><small>{{ day.count }} {{ day.count|pluralize:"class,classes" }}</small></a>{% endfor %}
+  </div>
+</section>
+
+<section class="schedule-list-section section-shell">
+  <div class="schedule-list-heading"><div><span class="home-section-pill">UPCOMING SESSIONS</span><h2>{{ selected_day|title }}'s <span class="catalog-gradient-text">Classes</span></h2><p>{{ classes|length }} class{{ classes|length|pluralize }} available · {{ week_total }} upcoming this week</p></div><div class="schedule-view-switch" role="group" aria-label="Change schedule layout"><button type="button" data-schedule-view="grid" class="is-active" aria-pressed="true" aria-label="Grid view">▦</button><button type="button" data-schedule-view="list" aria-pressed="false" aria-label="List view">☰</button></div></div>
+
+  <div class="schedule-toolbar-reference">
+    <div class="schedule-category-chips" role="group" aria-label="Filter classes by category"><a class="schedule-category-chip {% if not selected_category %}is-active{% endif %}" href="?day={{ selected_day }}&amp;trainer={{ selected_trainer }}">📋 All Classes</a>{% for category in categories %}<a class="schedule-category-chip {% if category == selected_category %}is-active{% endif %}" href="?day={{ selected_day }}&amp;category={{ category|urlencode }}&amp;trainer={{ selected_trainer }}">{% if category|lower == 'strength' %}💪{% elif category|lower == 'mobility' %}🧘{% elif category|lower == 'conditioning' %}🔥{% elif category|lower == 'cardio' %}🏃{% else %}🏋️{% endif %} {{ category }}</a>{% endfor %}</div>
+    <form method="get" class="schedule-filter-form"><input type="hidden" name="day" value="{{ selected_day }}"><label><span class="visually-hidden">Filter by trainer</span><select name="trainer" onchange="this.form.submit()"><option value="">All Trainers</option>{% for trainer in trainers %}<option value="{{ trainer.id }}" {% if selected_trainer == trainer.id|stringformat:'s' %}selected{% endif %}>{{ trainer.name|default:'FitZone Coach' }}</option>{% endfor %}</select></label><label><span class="visually-hidden">Filter by category</span><select name="category" onchange="this.form.submit()"><option value="">All Categories</option>{% for category in categories %}<option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>{% endfor %}</select></label></form>
+  </div>
+
+  {% if classes %}<div class="schedule-card-grid" data-schedule-results data-view="grid">
+    {% for fitness_class in classes %}<article class="schedule-class-card" data-reveal>
+      <div class="schedule-card-accent {% if fitness_class.category|lower == 'mobility' %}accent-mobility{% elif fitness_class.category|lower == 'conditioning' %}accent-conditioning{% endif %}"></div>
+      <div class="schedule-card-top"><span class="schedule-class-icon">{% if fitness_class.category|lower == 'strength' %}💪{% elif fitness_class.category|lower == 'mobility' %}🧘{% elif fitness_class.category|lower == 'conditioning' %}🔥{% else %}🏋️{% endif %}</span><span class="schedule-class-category">{{ fitness_class.category }}</span><time>{{ fitness_class.starts_at|date:"g:i A" }}</time></div>
+      <h3>{{ fitness_class.title }}</h3>
+      <div class="schedule-coach-panel"><span class="schedule-coach-avatar">{% if fitness_class.trainer %}{{ fitness_class.trainer.name|first|upper }}{% else %}FZ{% endif %}</span><div><small>TRAINER</small><strong>{% if fitness_class.trainer %}{{ fitness_class.trainer }}{% else %}FitZone Coach{% endif %}</strong></div></div>
+      <div class="schedule-class-meta"><span>⏱ &nbsp; {{ fitness_class.duration_minutes }} min</span><span>📍 &nbsp; FitZone Studio</span></div>
+      <div class="schedule-spots {% if not fitness_class.spots_left %}is-full{% endif %}"><span><i></i>{% if fitness_class.spots_left %}Available{% else %}Class Full{% endif %}</span><small>{{ fitness_class.spots_left }} spots</small></div>
+      {% if request.user.is_authenticated and request.user.role == 'member' %}<form method="post" action="{% url 'book_class' fitness_class.id %}" class="schedule-book-form">{% csrf_token %}<button type="submit" {% if not fitness_class.spots_left %}disabled{% endif %}>Book Now <span>→</span></button></form>{% else %}<a class="schedule-book-button" href="{% url 'login' %}">Book Now <span>→</span></a>{% endif %}
+    </article>{% endfor %}
+  </div>{% else %}<div class="schedule-empty-state"><span>🗓️</span><h3>No classes scheduled for {{ selected_day|title }}</h3><p>Try another day or clear your filters to find an upcoming class.</p><a class="about-secondary-button" href="{% url 'schedule' %}?day={{ selected_day }}">Clear Filters</a></div>{% endif %}
+</section>
+
+<section class="schedule-week-overview section-pad"><div class="section-shell"><div class="about-section-heading"><span class="about-pill about-pill-green">Weekly Overview</span><h2>Class <span class="catalog-gradient-text">Statistics</span></h2></div><div class="schedule-week-stats">{% for day in week_days %}<a href="?day={{ day.value }}" class="schedule-week-stat {% if day.value == selected_day %}is-active{% endif %}"><strong>{{ day.label|slice:':3' }}</strong><b>{{ day.count }}</b><span>classes</span></a>{% endfor %}</div></div></section>
+<section class="schedule-bottom-cta"><div class="about-join-card"><h2>Ready to Get <span class="catalog-gradient-text">Started?</span></h2><p>Join FitZone today and get access to all classes. Your first session is on us.</p><div class="about-hero-actions"><a class="about-primary-button" href="{% url 'register' %}">Join Today</a><a class="about-secondary-button" href="{% url 'pricing' %}">View Memberships</a></div></div></section>
+{% endblock %}

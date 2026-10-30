@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}About FitZone - A Healthier Community{% endblock %}
+{% block content %}
+<section class="about-reference-hero">
+  <div class="section-shell about-hero-grid">
+    <div class="about-hero-copy" data-reveal>
+      <span class="about-pill">About FitZone</span>
+      <h1>Building a<br>Healthier<br><span class="about-gradient-text">Community</span></h1>
+      <p>Since 2008, FitZone has been dedicated to transforming lives through fitness. We believe everyone deserves access to world-class facilities and expert guidance to achieve their health goals.</p>
+      <div class="about-hero-actions"><a class="about-primary-button" href="{% url 'register' %}">Join Our Family</a><a class="about-secondary-button" href="{% url 'contact' %}">Contact Us</a></div>
+    </div>
+    <div class="about-hero-visual" data-reveal>
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=88" alt="Strength training equipment inside a FitZone gym">
+      <div class="about-experience-card"><strong>15+</strong><span>Years of<br>Excellence</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="about-purpose-section section-pad">
+  <div class="section-shell about-purpose-grid">
+    <article class="about-purpose-card" data-reveal><span class="about-icon about-icon-purple" aria-hidden="true">ϟ</span><h2>Our Mission</h2><p>To empower individuals of all fitness levels to achieve their health and wellness goals through exceptional facilities, expert guidance, and a supportive community environment. We are committed to making fitness accessible, enjoyable, and transformative for everyone.</p></article>
+    <article class="about-purpose-card" data-reveal><span class="about-icon about-icon-green" aria-hidden="true">◎</span><h2>Our Vision</h2><p>To become the most trusted and innovative fitness destination, recognized for transforming lives and building the healthiest community. We envision a future where optimal health and wellness are achievable for everyone, regardless of their starting point.</p></article>
+  </div>
+</section>
+
+<section class="about-values-section section-pad">
+  <div class="section-shell">
+    <div class="about-section-heading" data-reveal><span class="about-pill about-pill-gold">What Drives Us</span><h2>Our Core <span class="about-gradient-text">Values</span></h2></div>
+    <div class="about-values-grid">
+      <article class="about-value-card" data-reveal><span aria-hidden="true">🎯</span><h3>Excellence</h3><p>We strive for excellence in everything we do, from equipment quality to member service.</p></article>
+      <article class="about-value-card" data-reveal><span aria-hidden="true">🤝</span><h3>Community</h3><p>Building a supportive community where members encourage and inspire each other.</p></article>
+      <article class="about-value-card" data-reveal><span aria-hidden="true">💡</span><h3>Innovation</h3><p>Continuously adopting new technologies and methods to enhance your fitness experience.</p></article>
+      <article class="about-value-card" data-reveal><span aria-hidden="true">💗</span><h3>Wellness</h3><p>Promoting holistic wellness that encompasses physical, mental, and emotional health.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="about-journey-section section-pad">
+  <div class="section-shell">
+    <div class="about-section-heading" data-reveal><span class="about-pill">Our Journey</span><h2>The FitZone <span class="about-gradient-text">Story</span></h2><p>From humble beginnings to becoming the city's premier fitness destination.</p></div>
+    <div class="about-timeline">
+      <article class="about-timeline-card" data-reveal><span class="about-year">2008</span><span class="about-timeline-emoji">🌱</span><h3>The Beginning</h3><p>FitZone was founded with a vision to make fitness accessible to everyone in our community.</p></article>
+      <article class="about-timeline-card" data-reveal><span class="about-year">2012</span><span class="about-timeline-emoji">🏊</span><h3>First Expansion</h3><p>We expanded our facility with dedicated studios and new ways to move together.</p></article>
+      <article class="about-timeline-card" data-reveal><span class="about-year">2016</span><span class="about-timeline-emoji">📱</span><h3>Going Digital</h3><p>We launched a member portal to make class schedules and fitness tracking easier.</p></article>
+      <article class="about-timeline-card" data-reveal><span class="about-year">2020</span><span class="about-timeline-emoji">🎉</span><h3>Community Growth</h3><p>Our member community grew, bringing new energy, classes, and shared milestones.</p></article>
+      <article class="about-timeline-card" data-reveal><span class="about-year">2024</span><span class="about-timeline-emoji">✨</span><h3>Innovation Hub</h3><p>We introduced smarter coaching and recovery experiences for every fitness journey.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="about-facilities-section section-pad">
+  <div class="section-shell">
+    <div class="about-section-heading" data-reveal><span class="about-pill about-pill-green">World-Class Amenities</span><h2>Our <span class="about-gradient-text">Facilities</span></h2><p>Experience fitness like never before with our state-of-the-art facilities.</p></div>
+    <div class="about-facility-grid">
+      <article class="about-facility-card" data-reveal><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=85" alt="Cardio equipment in a bright gym"><div><h3>Cardio Zone</h3><p>Over 50 cardio machines including treadmills, ellipticals, bikes, and rowing machines.</p><span>50+ Machines</span><span>Personal TVs</span><span>Heart Rate Monitoring</span></div></article>
+      <article class="about-facility-card" data-reveal><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=85" alt="Free weight training area"><div><h3>Weight Training</h3><p>Complete free weight area with dumbbells up to 150lbs and Olympic lifting platforms.</p><span>Free Weights</span><span>Olympic Platforms</span><span>Cable Machines</span></div></article>
+      <article class="about-facility-card" data-reveal><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1000&q=85" alt="Group fitness class in a studio"><div><h3>Group Fitness Studios</h3><p>Three dedicated studios for yoga, cycling, and high-intensity group classes.</p><span>3 Studios</span><span>100+ Classes/Week</span><span>Premium Sound</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="about-equipment-section section-pad">
+  <div class="section-shell">
+    <div class="about-section-heading" data-reveal><span class="about-pill about-pill-gold">Premium Equipment</span><h2>Equipment <span class="about-gradient-text">Gallery</span></h2><p>We invest in the best equipment from world-renowned brands to help make every workout effective and safe.</p></div>
+    <div class="about-equipment-grid">
+      <article data-reveal><span>🏋️</span><h3>Treadmills</h3><p>Life Fitness</p><small>20 units</small></article><article data-reveal><span>🏋️</span><h3>Ellipticals</h3><p>Precor</p><small>15 units</small></article><article data-reveal><span>🚴</span><h3>Spin Bikes</h3><p>Peloton</p><small>30 units</small></article><article data-reveal><span>🏋️</span><h3>Cable Machines</h3><p>Technogym</p><small>10 units</small></article>
+      <article data-reveal><span>🏋️</span><h3>Smith Machines</h3><p>Hammer Strength</p><small>5 units</small></article><article data-reveal><span>🏋️</span><h3>Dumbbells</h3><p>Rogue</p><small>5–150 lbs</small></article><article data-reveal><span>🏋️</span><h3>Barbells</h3><p>Eleiko</p><small>15 units</small></article><article data-reveal><span>🚣</span><h3>Rowing Machines</h3><p>Concept2</p><small>10 units</small></article>
+    </div>
+  </div>
+</section>
+
+<section class="about-stats-section section-pad">
+  <div class="section-shell about-stats-grid">
+    <article data-reveal><span>👥</span><strong>5,000+</strong><p>Happy Members</p></article><article data-reveal><span>🏆</span><strong>50+</strong><p>Expert Staff</p></article><article data-reveal><span>🏢</span><strong>25,000</strong><p>Sq. Ft. Space</p></article><article data-reveal><span>⭐</span><strong>98%</strong><p>Satisfaction Rate</p></article>
+  </div>
+</section>
+
+<section class="about-join-section section-pad">
+  <div class="about-join-card" data-reveal><h2>Ready to Start Your <span class="about-gradient-text">Journey?</span></h2><p>Visit our facility for a free tour and consultation with our fitness experts.</p><div class="about-hero-actions"><a href="{% url 'register' %}" class="about-primary-button">Join Today</a><a href="{% url 'contact' %}" class="about-secondary-button">Schedule a Tour</a></div></div>
+</section>
+{% endblock %}

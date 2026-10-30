@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Pricing - FitZone{% endblock %}
+{% block content %}
+<section class="reference-hero">
+  <span class="reference-pill">💰 &nbsp; Simple Pricing</span>
+  <h1>{% if page and page.hero_title %}{{ page.hero_title }}{% else %}Choose Your <span>Perfect Plan</span>{% endif %}</h1>
+  <p>{% if page and page.hero_subtitle %}{{ page.hero_subtitle }}{% else %}No hidden fees. No surprises. Just straightforward pricing for your fitness goals.{% endif %}</p>
+  <div class="reference-toggle"><strong>Monthly</strong><span>Yearly</span><b>Save 17%</b></div>
+</section>
+<section class="reference-pricing section-shell">
+  <div class="reference-plan-grid">
+    {% for plan in plans %}
+    <article class="reference-plan {% if plan.popular %}is-popular{% endif %}">
+      {% if plan.popular %}<div class="reference-popular">🔥 Most Popular</div>{% endif %}
+      <div class="reference-plan-head"><span class="reference-plan-icon">{% if plan.popular %}💪{% elif forloop.counter == 2 %}👑{% else %}🌱{% endif %}</span><h2>{{ plan.name }}</h2><p>{{ plan.description }}</p></div>
+      <div class="reference-plan-price"><span>₹</span><strong>{{ plan.price|floatformat:0 }}</strong><small>/mo</small></div>
+      <ul>{% for feature in plan.features %}<li><b>✓</b><span>{{ feature }}<small>Included</small></span></li>{% empty %}<li><b>✓</b><span>Coach-led training<small>Included</small></span></li>{% endfor %}</ul>
+      {% if request.user.is_authenticated and request.user.role == 'member' %}<form method="post" action="{% url 'subscribe' plan.id %}">{% csrf_token %}<button class="reference-plan-button" type="submit">Buy Now</button></form>{% else %}<a class="reference-plan-button" href="{% url 'register' %}">Buy Now</a>{% endif %}
+    </article>
+    {% empty %}<p class="empty-state">Membership plans are being updated.</p>{% endfor %}
+  </div>
+</section>
+<section class="reference-compare section-shell">
+  <h2>Compare <span>Plans</span></h2>
+  <div class="reference-compare-table">
+    <div class="reference-compare-row reference-compare-header"><strong>Features</strong>{% for plan in plans %}<strong><span class="reference-compare-icon">{% if plan.popular %}💪{% elif forloop.counter == 2 %}👑{% else %}🌱{% endif %}</span>{{ plan.name }}<small>₹{{ plan.price|floatformat:0 }}/mo</small></strong>{% endfor %}</div>
+    {% for row in compare_rows %}<div class="reference-compare-row"><span>{{ row.name }}</span>{% for included in row.included %}<span>{% if included %}<b>✓</b><small>Included</small>{% else %}<i>—</i>{% endif %}</span>{% endfor %}</div>{% endfor %}
+  </div>
+</section>
+{% endblock %}

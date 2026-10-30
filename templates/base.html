@@ -1,0 +1,79 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Train at FitZone. Expert coaching, great classes, and a community built around your next level.">
+  <title>{% block title %}FitZone - Fitness Center{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}?v=20261029">
+  <link rel="stylesheet" href="{% static 'css/redesign.css' %}?v=20261029">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  {% block site_header %}<header class="site-header{% if request.resolver_match.url_name == 'home' %} site-header-home{% endif %}">
+    <a class="brand" href="{% url 'home' %}" aria-label="FitZone home"><span class="brand-mark"><span>FZ</span></span><span class="brand-name">Fit<span>Zone</span></span></a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+      <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+      <a href="{% url 'programs' %}" class="{% if request.resolver_match.url_name == 'programs' %}active{% endif %}">Programs</a>
+      <a href="{% url 'facilities' %}" class="{% if request.resolver_match.url_name == 'facilities' %}active{% endif %}">Facilities</a>
+      <a href="{% url 'trainers' %}" class="{% if request.resolver_match.url_name == 'trainers' %}active{% endif %}">Trainers</a>
+      <a href="{% url 'schedule' %}" class="{% if request.resolver_match.url_name == 'schedule' %}active{% endif %}">Schedule</a>
+      <a href="{% url 'pricing' %}" class="{% if request.resolver_match.url_name == 'pricing' %}active{% endif %}">Pricing</a>
+      <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+      {% if not request.user.is_authenticated %}<a class="nav-mobile-only" href="{% url 'register' %}">Join now</a>{% endif %}
+    </nav>
+    <div class="header-actions">
+      <a class="cart-link" href="{% url 'pricing' %}" aria-label="View memberships" title="View memberships"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg></a>
+      {% if request.user.is_authenticated %}
+        <div class="account-menu">
+          <button class="account-trigger" type="button" aria-expanded="false" aria-controls="account-dropdown">
+            <span class="account-avatar">{{ request.user.display_name|first|upper }}</span>
+            <span class="account-trigger-copy">{{ request.user.display_name }}<small>{% if request.user.is_superuser or request.user.role == 'admin' %}Admin{% elif request.user.role == 'trainer' %}Trainer{% else %}Member{% endif %}</small></span>
+            <span class="account-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div class="account-dropdown" id="account-dropdown" hidden>
+            <div class="account-dropdown-user"><span class="account-avatar">{{ request.user.display_name|first|upper }}</span><span><strong>{{ request.user.display_name }}</strong><small>{{ request.user.email }}</small></span></div>
+            {% if request.user.is_superuser or request.user.role == 'admin' %}
+              <a href="{% url 'admin_dashboard' %}"><span>▥</span>Admin Panel</a>
+              <a href="{% url 'admin_manage_edit' 'accounts' request.user.pk %}"><span>♙</span>My Profile</a>
+              <a href="{% url 'admin_manage_list' 'accounts' %}"><span>♙</span>Manage Accounts</a>
+              <a href="{% url 'admin_manage_list' 'bookings' %}"><span>▣</span>Booking History</a>
+              <a href="{% url 'admin_manage_list' 'inquiries' %}"><span>☏</span>Messages</a>
+            {% endif %}
+            <form method="post" action="{% url 'logout' %}" class="account-logout">{% csrf_token %}<button type="submit"><span>⇥</span>Log out</button></form>
+          </div>
+        </div>
+      {% else %}
+        <a class="nav-account" href="{% url 'login' %}">Login</a>
+        <a class="button button-small button-join" href="{% url 'register' %}">Join Now</a>
+      {% endif %}
+    </div>
+  </header>{% endblock %}
+  {% if messages %}<div class="message-stack" aria-live="polite">{% for message in messages %}<div class="flash flash-{{ message.tags }}">{{ message }}<button aria-label="Dismiss" onclick="this.parentElement.remove()">×</button></div>{% endfor %}</div>{% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  {% block site_footer %}<footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="{% url 'home' %}"><span class="brand-mark"><span>FZ</span></span><span class="brand-name">Fit<span>Zone</span></span></a>
+        <p>Transform your body and mind with our state-of-the-art fitness center. Join thousands of members achieving their fitness goals.</p>
+        <div class="footer-socials" aria-label="Social media">
+          <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Twitter">𝕏</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-links"><h3>Quick Links</h3><a href="{% url 'about' %}">About Us</a><a href="{% url 'schedule' %}">Classes</a><a href="{% url 'trainers' %}">Trainers</a><a href="{% url 'pricing' %}">Pricing</a><a href="{% url 'contact' %}">Contact</a></div>
+      <div class="footer-links"><h3>Our Services</h3><a href="{% url 'trainers' %}">Personal Training</a><a href="{% url 'schedule' %}">Group Classes</a><a href="{% url 'programs' %}">Nutrition Coaching</a><a href="{% url 'programs' %}">Yoga &amp; Meditation</a><a href="{% url 'programs' %}">Strength Training</a></div>
+      <div class="footer-visit"><h3>Contact Us</h3><p><span class="footer-contact-icon">⌖</span><span>Lovely Professional University,<br>Phagwara, Punjab 144411</span></p><p><span class="footer-contact-icon">♧</span><span><a href="tel:+919430260097">+91 9430260097</a>, <a href="tel:+919939896403">+91 9939896403</a></span></p><p><span class="footer-contact-icon">✉</span><a href="mailto:rameshlpu779@gmail.com">rameshlpu779@gmail.com</a></p></div>
+    </div>
+    <div class="footer-bottom"><span>© {% now "Y" %} FitZone. All rights reserved.</span><span class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></span></div>
+  </footer>{% endblock %}
+  <script src="{% static 'js/site.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
