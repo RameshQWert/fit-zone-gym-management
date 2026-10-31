@@ -24,7 +24,7 @@ python manage.py runserver
 
 Open `http://127.0.0.1:8000/`. Use the superuser account at `/admin/login/` to sign in to the custom admin console; the same account can also access `/django-admin/`. There is no hard-coded default admin account. New public registrations receive the Member role.
 
-`.env.example` documents the supported environment variable names. Django does not load `.env` files by itself, so set `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, or `DJANGO_ALLOWED_HOSTS` in your shell before starting the app. The built-in key is for local development only. Locally, password reset emails are printed in the server console; configure an email backend for deployment.
+`.env.example` documents the supported environment variable names. Django does not load `.env` files by itself, so set `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, and `DJANGO_ALLOWED_HOSTS` in your shell before starting the app. `DJANGO_SECRET_KEY` is required; the application does not include a fallback key. Locally, password reset emails are printed in the server console; configure an email backend for deployment.
 
 ## Roles and workflows
 
